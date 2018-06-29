@@ -1,0 +1,114 @@
+{include file="public/huitop"}
+<title>栏目列表</title>
+<link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="__ADMIN__/style/admin.css" media="all">
+</head>
+<body>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+         <a href="javascript:;" onclick="delall()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+         <a class="btn btn-primary radius" data-title="添加栏目" onclick="edit('添加广告栏目','{:url("ad/typeadd")}','800px','500px')" ><i class="Hui-iconfont">&#xe600;</i> 添加栏目</a>
+        </span>
+	<div>
+		<table class="table table-border table-bordered table-bg">
+			<thead>
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="30">ID</th>
+					<th width="80">名称</th>
+					<th width="120">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+                {volist name="list" id="vo"}
+				<tr class="text-c">
+					<td><input type="checkbox" value="{$vo.id}" name="ids[]" id="ids[]"></td>
+					<td>{$vo.id}</td>
+                    <td>{$vo.title}</td>
+					<td class="f-14 td-manage">
+                        <a style="text-decoration:none" class="ml-5" onClick="edit('栏目编辑','{:url("ad/typeedit",['id'=>$vo['id']])}','800px','500px')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+                        <a style="text-decoration:none" class="ml-5" onClick="del(this,'{$vo.id}')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                    </td>
+				</tr>
+                {/volist}
+			</tbody>
+		</table>
+	</div>
+</div>
+{include file="public/huifoot"}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__ADMIN__/huiadmin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__ADMIN__/huiadmin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script src="__ADMIN__/layui/layui.js"></script>
+<script src="__ADMIN__/layui/layui.all.js"></script>
+<script type="text/javascript">
+/*admin-添加*/
+function edit(title,url,w,h){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		shadeClose: true,
+	    shade: false,
+	    maxmin: true,
+		area: [w, h],
+	 	content: url,
+		end: function () {
+		window.location.reload();
+		}
+	});
+
+}
+
+
+
+function del(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			type: 'post',
+			url: "{:url('ajax/del')}",
+			dataType: 'json',
+			data:{id:id,table:'adtype'},
+			success: function(data){
+				if(data.status==200){
+					$(obj).parents("tr").remove();
+					layer.msg(data.info,{icon:1,anim: 6,time:1000});
+				}else{
+				    layer.msg(data.info,{icon: 2,anim: 6,time:1000});
+				}
+			}
+		});
+	});
+}
+
+function delall(){
+	layer.confirm('确认要删除吗？',function(index){
+	var a = [];
+	$('input[name*=ids]').each(function(i,o){
+			if($(o).is(':checked')){
+					a.push($(o).val());
+			}
+	});
+	if(a==''){
+		layer.msg('请选择需要删除的邮件!',{icon: 5,anim: 6,time:1000} , function(){return false;});
+	}
+	$.ajax({
+		type: 'post',
+		url: "{:url('ajax/alldel')}",
+		dataType: 'json',
+		data: {ids:a,table:'adtype'},
+		success: function(data){
+			if(data.status==200){
+				layer.msg(data.info ,{icon: 1,time:1000} , function(){
+				window.location.replace(location.href);
+				});
+			}else{
+				layer.msg(data.info,{icon: 2,anim: 6,time:1000} , function(){});
+			}
+		}
+	});
+	});
+}
+</script>
+</body>
+</html>

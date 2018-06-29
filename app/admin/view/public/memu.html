@@ -1,0 +1,32 @@
+<div class="layui-side layui-side-menu">
+  <div class="layui-side-scroll">
+    <div class="layui-logo" lay-href="{:url('index/index2')}">
+      <span>CatLiAdminCMS</span>
+    </div>
+    <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+      {volist name="all_tree" id="vo"}
+      <li data-name="home" class="layui-nav-item">
+        <a href="javascript:;" lay-tips="{$vo.memu_name}" lay-direction="2">
+          <i class="layui-icon {$vo.icon}"></i>
+          <cite>{$vo.memu_name}</cite>
+        </a>
+        <?php if(!empty($vo['child'])){?>
+        <dl class="layui-nav-child">
+            {volist name="vo['child']" id="two" key="k"}
+          <dd data-name="console" <?php if($k==1){echo 'class="layui-this"';}?>>
+            <a lay-href="{:url($two.linkurl)}">{$two.memu_name}</a>
+          </dd>
+           {/volist}
+        </dl>
+        <?php }?>
+      </li>
+      {/volist}
+      <li data-name="home" class="layui-nav-item">
+        <a href="http://www.ahimu.com/" target="_blank" lay-tips="帮助中心" lay-direction="2">
+          <i class="layui-icon layui-icon-about"></i>
+          <cite>帮助中心</cite>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

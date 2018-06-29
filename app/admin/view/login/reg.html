@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+   <title>登入 - CatLiAdminCMS</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__ADMIN__/style/admin.css" media="all">
+  <link rel="stylesheet" href="__ADMIN__/style/login.css" media="all">
+</head>
+<body>
+  <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+    <div class="layadmin-user-login-main">
+      <div class="layadmin-user-login-box layadmin-user-login-header">
+          <h2>CatLiAdminCMS</h2>
+          <p>CatLiAdminCMS管理系统</p>
+      </div>
+      <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+        <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="LAY-user-login-cellphone"></label>
+          <input type="text" name="username" id="username"  placeholder="邮箱" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <div class="layui-row">
+            <div class="layui-col-xs7">
+              <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
+              <input type="text" name="vercode" id="vercode"  placeholder="验证码" class="layui-input">
+            </div>
+            <div class="layui-col-xs5">
+              <div style="margin-left: 10px;">
+                <input type="button" class="layui-btn layui-btn-primary layui-btn-fluid" onclick="getsmscode();" id="LAY-user-getsmscode" value="获取验证码">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+          <input type="password" name="password" id="password" placeholder="密码" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-repass"></label>
+          <input type="password" name="repass" id="repass"  placeholder="确认密码" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-nickname"></label>
+          <input type="text" name="nickname" id="nickname"  placeholder="昵称" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+          <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="submitreg" id="submitreg">注 册</button>
+        </div>
+        <div class="layui-trans layui-form-item layadmin-user-login-other">
+          <a href="{:url('login/index')}" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-trans layadmin-user-login-footer">
+       <p>© 2018 <a href="http://www.ahimu.com/" target="_blank">www.ahimu.com</a></p>
+    </div>
+  </div>
+  <script src="__ADMIN__/layui/jquery.min.js"></script>
+  <script src="__ADMIN__/layui/layui.js"></script>
+  <script src="__ADMIN__/layui/layui.all.js"></script>
+  <script>
+  function getsmscode(){
+      var username=$('#username').val();
+      var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+      if(username==''){
+         layer.msg('邮箱不能为空!',{icon: 5,anim: 6}, function(){});
+         $('#username').focus();
+         return false;
+      }else if(!reg.test(username)){
+         layer.msg('邮箱不合法!',{icon: 5,anim: 6}, function(){});
+         $('#username').focus();
+         return false;
+     }
+      $.ajax({
+              type: "post",
+              url: "{:url('login/emailcode')}",
+              data: {username:username},
+              dataType: "json",
+              success: function(data){
+                  if(data.status==200){
+                       layer.msg(data.info ,{icon: 1,time:1000} , function(){
+                           var t=60;
+                           var timer=setInterval(function(){
+                               t=t-1
+                               $("#LAY-user-getsmscode").val(t+'s');
+                               $('#LAY-user-getsmscode').attr("disabled", true);
+                               if(t==0){
+                                   t=60
+                                   window.clearInterval(timer);
+                                   $('#LAY-user-getsmscode').val('免费获取验证码');
+                                   $('#LAY-user-getsmscode').attr("disabled", false);
+                               }
+                           },1000);
+
+                       });
+                  }else{
+                      layer.msg(data.info,{icon: 5,anim: 6,time:1000} , function(){});
+                  }
+              }
+          });
+  }
+  $('#submitreg').click(function(){
+      var username=$('#username').val();
+      var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+      var password=$('#password').val();
+      var repass=$('#repass').val();
+      var vercode=$('#vercode').val();
+      var nickname=$('#nickname').val();
+      if(username==''){
+         layer.msg('邮箱不能为空!',{icon: 5,anim: 6}, function(){});
+         $('#username').focus();
+         return false;
+      }else if(!reg.test(username)){
+         layer.msg('邮箱不合法!',{icon: 5,anim: 6}, function(){});
+         $('#username').focus();
+         return false;
+      }
+      if(vercode==''){
+         layer.msg('验证码不能为空!',{icon: 5,anim: 6,time:1000} , function(){});
+         $('#vercode').focus();
+         return false;
+      }
+      if(password==''){
+         layer.msg('密码不能为空!',{icon: 5,anim: 6},  function(){});
+         $('#password').focus();
+         return false;
+     }else if(repass==''){
+         layer.msg('确认密码不能为空!',{icon: 5,anim: 6},  function(){});
+         $('#repass').focus();
+         return false;
+     }else if(repass!=password){
+         layer.msg('两次密码不一致!',{icon: 5,anim: 6},  function(){});
+         $('#repass').focus();
+         return false;
+     }
+      $.ajax({
+              type: "post",
+              url: "{:url('login/reg')}",
+              data: {username:username, password:password,vercode:vercode,nickname:nickname},
+              dataType: "json",
+              success: function(data){
+                  if(data.status==200){
+                       layer.msg(data.info ,{icon: 1,time:1000} , function(){
+                       location.href = data.url;
+                       });
+                  }else{
+                      layer.msg(data.info,{icon: 5,anim: 6,time:1000} , function(){
+                        //   $('#verify_img').attr("src", "{:captcha_src()}?"+'id='+Math.random());
+                      });
+                  }
+              }
+          });
+  });
+</script>
+</body>
+</html>

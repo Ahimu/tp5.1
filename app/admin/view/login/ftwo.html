@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>忘记密码 - lkkAdmin</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__ADMIN__/style/admin.css" media="all">
+  <link rel="stylesheet" href="__ADMIN__/style/login.css" media="all">
+</head>
+
+  <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+    <div class="layadmin-user-login-main">
+      <div class="layadmin-user-login-box layadmin-user-login-header">
+          <h2>lkkAdmin</h2>
+          <p>cat_li admincms</p>
+      </div>
+      <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+            <div class="layui-form-item">
+              <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+              <input type="password" name="password" id="password"  placeholder="新密码" class="layui-input">
+            </div>
+            <input type="hidden" name="username" id="username" value="{$username}">
+            <div class="layui-form-item">
+              <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-repass"></label>
+              <input type="password" name="repass" id="repass"  placeholder="确认密码" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+              <button class="layui-btn layui-btn-fluid" id="resetpass">重置新密码</button>
+            </div>
+
+      </div>
+    </div>
+    <div class="layui-trans layadmin-user-login-footer">
+       <p>© 2018 <a href="http://www.ahimu.com/" target="_blank">www.ahimu.com</a></p>
+    </div>
+  </div>
+  <script src="__ADMIN__/layui/jquery.min.js"></script>
+  <script src="__ADMIN__/layui/layui.js"></script>
+  <script src="__ADMIN__/layui/layui.all.js"></script>
+  <script>
+  $('#resetpass').click(function(){
+      var username=$('#username').val();
+      var password=$('#password').val();
+      var repass=$('#repass').val();
+      if(password==''){
+         layer.msg('密码不能为空!',{icon: 5,anim: 6},  function(){});
+         $('#password').focus();
+         return false;
+      }
+      if(repass==''){
+         layer.msg('确认密码不能为空!',{icon: 5,anim: 6},  function(){});
+         $('#repass').focus();
+         return false;
+      }
+      if(password!=repass){
+         layer.msg('l两次密码不一样!',{icon: 5,anim: 6},  function(){});
+         $('#password').focus();
+         return false;
+      }
+      $.ajax({
+              type: "post",
+              url: "{:url('login/ftwo')}",
+              data: {username:username,password:password},
+              dataType: "json",
+              success: function(data){
+                  if(data.status==200){
+                       layer.msg(data.info ,{icon: 1,time:1000} , function(){
+                           var index = parent.layer.getFrameIndex(window.name);
+  						   parent.layer.close(index);
+                       });
+                  }else{
+                      layer.msg(data.info,{icon: 5,anim: 6,time:1000} , function(){
+                      });
+                  }
+              }
+          });
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>网站设置</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__ADMIN__/style/admin.css" media="all">
+</head>
+<body>
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+            <div class="layui-tab layui-tab-brief layui-card-header" lay-filter="docDemoTabBrief">
+              <ul class="layui-tab-title">
+                <li class=" layui-this">网站设置</li>
+                <li >安全设置</li>
+                <li >邮件设置</li>
+                <li >文件上传</li>
+                <li >字段设置</li>
+              </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-card-body" style="background-color:white;" pad15>
+                        <div class="layui-form" wid100 lay-filter="">
+                            {volist name="list" id="vo" key="k"}
+            				{if condition="$vo['vargroup'] eq '1'"}
+            				{if condition="$vo['vartype'] eq 'string'"}
+                            <div class="layui-form-item {$k}">
+                              <label class="layui-form-label">{$vo.varinfo}</label>
+                              <div class="layui-input-inline" style="width: 380px;">
+                                <input id="{$vo.varname}" name="{$vo.varname}"  value="{$vo.varvalue}" class="layui-input">
+                              </div>
+                              <!-- <div class="layui-input-inline layui-input-company">分钟</div> -->
+                              <div class="layui-form-mid layui-word-aux">{$vo.varzs}</div>
+                            </div>
+                            {elseif condition="$vo['vartype'] eq 'text'"/}
+                            <div class="layui-form-item layui-form-text">
+                              <label class="layui-form-label">{$vo.varinfo}</label>
+                              <div class="layui-input-block">
+                                <textarea id="{$vo.varname}" name="{$vo.varname}"  class="layui-textarea">{$vo.varvalue}</textarea>
+                              </div>
+                            </div>
+                            {/if}
+                            {/if}
+                            {/volist}
+                            <div class="layui-form-item">
+                              <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="set_website">确认保存</button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-card-body" style="background-color:white;" pad15>
+                        <div class="layui-form" wid100 lay-filter="">
+                            {volist name="list" id="vo" key="k"}
+            				{if condition="$vo['vargroup'] eq '2'"}
+            				{if condition="$vo['vartype'] eq 'string'"}
+                            <div class="layui-form-item {$k}">
+                              <label class="layui-form-label">{$vo.varinfo}</label>
+                              <div class="layui-input-inline" style="width: 380px;">
+                                <input id="{$vo.varname}" name="{$vo.varname}"  value="{$vo.varvalue}" class="layui-input">
+                              </div>
+                              <!-- <div class="layui-input-inline layui-input-company">分钟</div> -->
+                              <div class="layui-form-mid layui-word-aux">{$vo.varzs}</div>
+                            </div>
+                            {elseif condition="$vo['vartype'] eq 'text'"/}
+                            <div class="layui-form-item layui-form-text">
+                              <label class="layui-form-label">{$vo.varinfo}</label>
+                              <div class="layui-input-block">
+                                <textarea id="{$vo.varname}" name="{$vo.varname}"  class="layui-textarea">{$vo.varvalue}</textarea>
+                              </div>
+                            </div>
+                            {/if}
+                            {/if}
+                            {/volist}
+                            <div class="layui-form-item">
+                              <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="set_website">确认保存</button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-card-body" style="background-color:white;" pad15>
+                        <div class="layui-form" wid100 lay-filter="">
+                            {volist name="list" id="vo" key="k"}
+            				{if condition="$vo['vargroup'] eq '3'"}
+            				{if condition="$vo['vartype'] eq 'string'"}
+                            <div class="layui-form-item {$k}">
+                              <label class="layui-form-label">{$vo.varinfo}</label>
+                              <div class="layui-input-inline" style="width: 380px;">
+                                <input id="{$vo.varname}" name="{$vo.varname}"  value="{$vo.varvalue}" class="layui-input">
+                              </div>
+                              <!-- <div class="layui-input-inline layui-input-company">分钟</div> -->
+                              <div class="layui-form-mid layui-word-aux">{$vo.varzs}</div>
+                            </div>
+                            {elseif condition="$vo['vartype'] eq 'text'"/}
+                            <div class="layui-form-item layui-form-text">
+                              <label class="layui-form-label">{$vo.varinfo}</label>
+                              <div class="layui-input-block">
+                                <textarea id="{$vo.varname}" name="{$vo.varname}"  class="layui-textarea">{$vo.varvalue}</textarea>
+                              </div>
+                            </div>
+                            {/if}
+                            {/if}
+                            {/volist}
+                            <div class="layui-form-item">
+                              <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="set_website">确认保存</button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-card-body" style="background-color:white;" pad15>
+                        <div class="layui-form" wid100 lay-filter="">
+                            {volist name="list" id="vo" key="k"}
+            				{if condition="$vo['vargroup'] eq '4'"}
+            				{if condition="$vo['vartype'] eq 'string'"}
+                            <div class="layui-form-item {$k}">
+                              <label class="layui-form-label">{$vo.varinfo}</label>
+                              <div class="layui-input-inline" style="width: 380px;">
+                                <input id="{$vo.varname}" name="{$vo.varname}"  value="{$vo.varvalue}" class="layui-input">
+                              </div>
+                              <!-- <div class="layui-input-inline layui-input-company">分钟</div> -->
+                              <div class="layui-form-mid layui-word-aux">{$vo.varzs}</div>
+                            </div>
+                            {elseif condition="$vo['vartype'] eq 'text'"/}
+                            <div class="layui-form-item layui-form-text">
+                              <label class="layui-form-label">{$vo.varinfo}</label>
+                              <div class="layui-input-block">
+                                <textarea id="{$vo.varname}" name="{$vo.varname}"  class="layui-textarea">{$vo.varvalue}</textarea>
+                              </div>
+                            </div>
+                            {/if}
+                            {/if}
+                            {/volist}
+                            <div class="layui-form-item">
+                              <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="set_website">确认保存</button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="layui-card-body" style="background-color:white;" pad15>
+                        <div class="layui-form" wid100 lay-filter="">
+                            <div class="layui-form-item">
+                              <label class="layui-form-label">所属分组</label>
+                              <div class="layui-input-inline">
+                                <select name="vargroup" id="vargroup" lay-verify="">
+                                  <option value="1" >网站设置</option>
+                                  <option value="2" >安全设置</option>
+                                  <option value="3" >邮件设置</option>
+                                  <option value="4" >文件上传</option>
+                                </select>
+                              </div>
+                              <div class="layui-form-mid layui-word-aux">字段添加在哪个分组中显示</div>
+                            </div>
+
+                            <div class="layui-form-item">
+                              <label class="layui-form-label">字段名称：</label>
+                              <div class="layui-input-inline">
+                                <input type="text" id="varname" name="varname" class="layui-input">
+                              </div>
+                              <div class="layui-form-mid layui-word-aux">字段名称:如 webname</div>
+                            </div>
+
+                            <div class="layui-form-item">
+                              <label class="layui-form-label">配置名称：</label>
+                              <div class="layui-input-inline">
+                                <input type="text" id="varinfo" name="varinfo" class="layui-input">
+                              </div>
+                              <div class="layui-form-mid layui-word-aux">配置名称：如 网站名称(webname)</div>
+                            </div>
+
+                            <div class="layui-form-item">
+                              <label class="layui-form-label">默认值：</label>
+                              <div class="layui-input-inline">
+                                <input type="text" id="varvalue" name="varvalue" class="layui-input">
+                              </div>
+                              <div class="layui-form-mid layui-word-aux">默认值： 网址(wwwlinkurl)[www.ahimu.com]</div>
+                            </div>
+
+                            <div class="layui-form-item">
+                              <label class="layui-form-label">字段类型：</label>
+                              <div class="layui-input-inline">
+                                <select name="vartype" id="vartype" lay-verify="">
+                        			<option value="string">文本</option>
+                        			<option value="bool">bool</option>
+                        			<option value="text">描述框</option>
+                                </select>
+                              </div>
+                              <div class="layui-form-mid layui-word-aux">字段类型：是那种输入框</div>
+                            </div>
+
+                            <div class="layui-form-item">
+                              <label class="layui-form-label">注释：</label>
+                              <div class="layui-input-inline">
+                                <input type="text" id="varzs" name="varzs" class="layui-input">
+                              </div>
+                              <div class="layui-form-mid layui-word-aux">注释： 输入框边的描述</div>
+                            </div>
+
+                            <div class="layui-form-item">
+                              <label class="layui-form-label">排序：</label>
+                              <div class="layui-input-inline">
+                                <input type="text" id="orderid" name="orderid" class="layui-input">
+                              </div>
+                              <div class="layui-form-mid layui-word-aux">排序</div>
+                            </div>
+
+                            <div class="layui-form-item">
+                              <div class="layui-input-block">
+                                <button class="layui-btn" onclick="submitform();">确认保存</button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="__ADMIN__/layui/jquery.min.js"></script>
+  <script src="__ADMIN__/layui/layui.js"></script>
+  <script src="__ADMIN__/layui/layui.all.js"></script>
+  <script>
+  layui.use('element', function(){
+    var element = layui.element;
+    var layid = location.hash.replace(/^#test1=/, '');
+    element.tabChange('test1', layid);
+    });
+    layui.use('form', function(){
+      var form = layui.form;
+      //监听提交
+      form.on('submit(set_website)', function(data){
+        $.ajax({
+              type: "post",
+              url: "{:url('system/edit')}",
+              data: data.field,
+              dataType: "json",
+              success: function(data){
+                  if(data.status==200){
+                       layer.msg(data.info ,{icon: 1,time:1000} , function(){
+                              window.location.reload();
+                       });
+                  }else{
+                      layer.msg(data.info,{icon: 5,anim: 6,time:1000} , function(){});
+                  }
+              }
+        });
+      });
+    });
+  function submitform(){
+  	var varname=$('#varname').val();
+  	var varinfo=$('#varinfo').val();
+  	var varvalue=$('#varvalue').val();
+  	var vartype=$('#vartype').val();
+    var orderid=$('#orderid').val();
+    var varzs=$('#varzs').val();
+    var vargroup=$('#vargroup').val();
+  	if(varname==''){
+  		layer.msg('不能为空不一致!',{icon: 5,anim: 6,time:1000} , function(){});
+  		$('#varname').focus();
+  		return false;
+  	}
+  	if(varinfo==''){
+  		layer.msg('不能为空不一致!',{icon: 5,anim: 6,time:1000} , function(){});
+  		$('#varinfo').focus();
+  		return false;
+  	}
+  	if(varvalue==''){
+  		layer.msg('不能为空不一致!',{icon: 5,anim: 6,time:1000} , function(){});
+  		$('#varvalue').focus();
+  		return false;
+  	}
+  	$.ajax({
+  			type: "post",
+  			url: "{:url('system/add')}",
+  			data: {varname:varname, varinfo:varinfo,varvalue:varvalue,vartype:vartype,varzs:varzs,orderid:orderid,vargroup:vargroup},
+  			dataType: "json",
+  			success: function(data){
+  				if(data.status==200){
+  					 layer.msg(data.info ,{icon: 1,time:1000} , function(){
+  						 	window.location.reload();
+  					 });
+  				}else{
+  					layer.msg(data.info,{icon: 5,anim: 6,time:1000} , function(){});
+  				}
+  			}
+  		});
+
+   }
+  </script>
+</body>
+</html>

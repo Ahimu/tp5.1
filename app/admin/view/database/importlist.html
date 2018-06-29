@@ -1,0 +1,79 @@
+{include file="public/huitop"}
+<title>管理员列表</title>
+</head>
+<body>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+         <a class="btn btn-primary radius" data-title="数据库列表" href="{:url('database/index')}" ><i class="Hui-iconfont">&#xe600;</i>数据库列表</a>
+		 <a class="btn btn-success radius" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+        </span>
+    </div>
+	<div>
+		<table class="table table-border table-bordered table-bg">
+			<thead>
+				<tr class="text-c">
+					<th width="25"><input type="checkbox" name="" value=""></th>
+					<th width="30">时间</th>
+					<th width="80">大小</th>
+					<th width="120">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+                {volist name="list" id="vo"}
+				<tr class="text-c">
+					<td><input type="checkbox" value="{$vo.time}" name="ids[]" id="ids[]"></td>
+					<td>{$vo.time|date="Y/m/d H:i:s"}</td>
+			     	<td>{$vo.size|byte_format}</td>
+					<td class="f-14 td-manage">
+						<!-- href="{//:url('database/downFile',['time'=>$vo['time']])} -->
+					<a style="text-decoration:none" class="btn btn-success radius" onClick="layer.tips('暂不支持下载!', this);"  title="下载">下载</a>
+					<a style="text-decoration:none" class="btn btn-danger radius"  onClick="layer.tips('暂不支持删除!', this);" href="javascript:;" title="删除">删除</a>
+                    </td>
+				</tr>
+                {/volist}
+			</tbody>
+		</table>
+	</div>
+</div>
+{include file="public/huifoot"}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="_ADMIN_/huiadmin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="_ADMIN_/huiadmin/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script src="_ADMIN_/layui/layui.js"></script>
+<script src="_ADMIN_/layui/layui.all.js"></script>
+<script type="text/javascript">
+
+
+
+function database_backup(){
+	layer.confirm('确认要备份吗？',function(index){
+	var a = [];
+	$('input[name*=ids]').each(function(i,o){
+			if($(o).is(':checked')){
+					a.push($(o).val());
+			}
+	});
+	if(a==''){
+		layer.msg('请选择需要备份的数据库!',{icon: 5,anim: 6,time:1000} , function(){return false;});
+	}
+	$.ajax({
+		type: 'post',
+		url: "{:url('database/backup')}",
+		dataType: 'json',
+		data: {tables:a},
+		success: function(data){
+			if(data.status==200){
+				layer.msg(data.info ,{icon: 1,time:1000} , function(){
+			    	window.location.replace(location.href);
+				});
+			}else{
+				layer.msg(data.info,{icon: 2,anim: 6,time:1000} , function(){});
+			}
+		}
+	});
+	});
+}
+</script>
+</body>
+</html>

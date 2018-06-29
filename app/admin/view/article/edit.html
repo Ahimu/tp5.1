@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>文章添加</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__ADMIN__/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__ADMIN__/style/admin.css" media="all">
+  <script src="__STATIC__/ueditor/ueditor.config.js" type="text/javascript"></script>
+  <script src="__STATIC__/ueditor/ueditor.all.min.js" type="text/javascript"></script>
+</head>
+<body>
+  <div class="layui-fluid">
+    <div class="layui-row layui-form layui-col-space15" id="formarticleadd">
+
+        <div class="layui-col-xs6 layui-col-sm7 layui-col-md9 layui-col-space15">
+           <div class="layui-card">
+             <div class="layui-card-header">文章内容</div>
+             <div class="layui-card-body">
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">所属栏目</label>
+                      <div class="layui-input-block">
+                        <select name="classid" id="classid">
+                          <option value="0">顶级栏目</option>
+                          {volist name="classlist" id="vo"}
+                          <option value="{$vo.id}" <?php if($list['classid']==$vo['id']){echo 'selected="selected"';}?> >{$vo.html}{$vo.catename}</option>
+                          {/volist}
+                        </select>
+                      </div>
+                    </div>
+                        <input type="hidden" name="id" id="id" value="{$list.id}">
+                     <div class="layui-form-item">
+                       <label class="layui-form-label">标题:</label>
+                       <div class="layui-input-block">
+                         <input type="text" name="title" id="title" class="layui-input" autocomplete="off" class="layui-input" value="{$list.title}">
+                       </div>
+                     </div>
+
+                     <div class="layui-form-item">
+                       <label class="layui-form-label">图片</label>
+                       <div class="layui-input-inline">
+                         <input name="picurl"  id="picurl"  class="layui-input" type="text" value="{$list.picurl}">
+                       </div>
+                       <label class="layui-form-label">缩略图</label>
+                       <div class="layui-input-inline">
+                       <input name="thumb"  id="thumb"  class="layui-input" type="text" value="{$list.thumb}">
+                       </div>
+                       <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                         <button type="button" class="layui-btn layui-btn-primary" id="test1">
+                           <i class="layui-icon">&#xe67c;</i>上传图片
+                         </button>
+                       </div>
+                       <div class="layui-input-inline" style="width:auto;">
+                         <img class="layui-upload-img" id="demo1" style="max-width:100px;" src="{$list.thumb}">
+                       </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">链接:</label>
+                      <div class="layui-input-block">
+                        <input type="text" name="linkurl" id="linkurl" class="layui-input" value="{$list.linkurl}">
+                      </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">内容:</label>
+                      <div class="layui-input-block">
+                         <textarea type="text" name="content" id="content"  style="width:100%;height:400px;">{$list.content}</textarea>
+          				 <script>var editor = new UE.ui.Editor();editor.render("content");</script>
+                      </div>
+                    </div>
+
+                     <div class="layui-form-item">
+                       <label class="layui-form-label">关键字:</label>
+                       <div class="layui-input-block">
+                         <input type="text" name="keywords" id="keywords" class="layui-input"  value="{$list.keywords}">
+                       </div>
+                     </div>
+
+                     <div class="layui-form-item">
+                       <label class="layui-form-label">描述:</label>
+                       <div class="layui-input-block">
+                         <textarea type="text" name="desc" id="desc" class="layui-textarea">{$list.desc}</textarea>
+                       </div>
+                     </div>
+                     <div class="layui-form-item">
+                        <div class="layui-input-block">
+                          <button class="layui-btn" onClick="article_save_submit();">提交</button>
+                        </div>
+                      </div>
+
+             </div>
+           </div>
+         </div>
+        <div class="layui-col-xs6 layui-col-sm5 layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">文章属性</div>
+          <div class="layui-card-body">
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">作者:</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="author" id="author" class="layui-input" value="{$list.author}">
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">来源:</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="source" id="source" class="layui-input" value="{$list.source}">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">浏览:</label>
+                    <div class="layui-input-inline">
+                      <input type="text" name="hits" id="hits" class="layui-input" value="{$list.hits}">
+                    </div>
+                  </div>
+
+                  <div class="layui-form-item">
+                    <label class="layui-form-label">评论:</label>
+                    <div class="layui-input-inline">
+                      <input name="comment"  id="comment"  class="layui-input" type="text" value="{$list.comment}">
+                    </div>
+                 </div>
+
+                 <div class="layui-form-item">
+                   <label class="layui-form-label">点赞:</label>
+                   <div class="layui-input-inline">
+                     <input name="zan"  id="zan"  class="layui-input" type="text" value="{$list.zan}">
+                   </div>
+                </div>
+
+                <div class="layui-form-item">
+                  <label class="layui-form-label">点踩:</label>
+                  <div class="layui-input-inline">
+                    <input name="cai"  id="cai"  class="layui-input" type="text" value="{$list.cai}">
+                  </div>
+               </div>
+
+                <div class="layui-form-item">
+                 <label class="layui-form-label">排序:</label>
+                 <div class="layui-input-inline">
+                   <input name="orderid"  id="orderid"  class="layui-input" type="text" value="{$list.orderid}">
+                 </div>
+                </div>
+                <div class="layui-form-item">
+                 <label class="layui-form-label">时间:</label>
+                 <div class="layui-input-inline">
+                   <input name="addtime"  id="addtime"  class="layui-input" type="text" value="{$list.addtime|date='Y-m-d H:i:s'}">
+                 </div>
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label">标志</label>
+                  <div class="layui-input-inline">
+                    <select name="flag" id="flag">
+                      <option value="">没有选择任何选项</option>
+                      <option value="1">推荐</option>
+                      <option value="2">热门</option>
+                      <option value="3">最新</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="layui-form-item">
+                     <label class="layui-form-label">标签</label>
+                     <div class="layui-input-block" id="tag_ids2"> </div>
+                </div>
+                <div class="layui-form-item">
+                  <label class="layui-form-label">状态</label>
+                  <div class="layui-input-inline">
+                      <input type="radio" name="open" id="open" value="true" title="显示"  <?php if($list['open']==true){echo 'checked';}?>>
+                      <input type="radio" name="open" id="open" value="false" title="隐藏"  <?php if($list['open']==false){echo 'checked';}?>>
+                    </div>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="__ADMIN__/layui/jquery.min.js"></script>
+<script src="__ADMIN__/layui/layui.js"></script>
+<script src="__ADMIN__/layui/layui.all.js"></script>
+<script type="text/javascript">
+layui.use(['laydate','upload'] ,function(){
+	var $ = layui.jquery
+	,upload = layui.upload;
+	var uploadInst = upload.render({
+			elem: '#test1',
+			url: '{:url("Upload/pic")}',
+            before: function(obj){
+              //预读本地文件示例，不支持ie8
+              obj.preview(function(index, file, result){
+                $('#demo1').attr('src', result); //图片链接（base64）
+              });
+            },
+			done: function(res){
+                console.log(res);
+			if(res.code > 0){
+				 $('#picurl').val(res.url);
+                 $('#thumb').val(res.thumb);
+		    }else{
+				return layer.msg('上传失败');
+			}
+		}
+	})
+    var laydate = layui.laydate;
+    laydate.render({
+     elem: '#addtime' //指定元素
+     ,type: 'datetime'
+    });
+});
+layui.config({base : ''}).extend({
+            selectN: '__ADMIN__/layui/layui_extends/selectN',
+            selectM: '__ADMIN__/layui/layui_extends/selectM',
+    })
+    .use(['layer','form','jquery','selectN','selectM'],
+    function(){
+    $ = layui.jquery;
+    var form = layui.form
+    ,selectN = layui.selectN
+    ,selectM = layui.selectM;
+    var tagIns2 = selectM({
+      elem: '#tag_ids2'
+     ,field: {idName:'id',titleName:'name'}
+     ,name: 'tags'
+     ,max : 5
+     ,selected: [{$list.tags}]
+     ,delimiter: ','
+     ,data:function(){
+       var tagsData;
+       $.ajax({
+         url:"{:url('ajax/tags')}",
+         dataType:'json',
+         async:false,
+         success:function(json){
+           tagsData=json;
+         }
+       });
+       return tagsData;
+     }()
+    });
+  });
+  function article_save_submit()
+  {
+          var classid=$('#classid').val();
+          var title=$('#title').val();
+          var picurl=$('#picurl').val();
+          var thumb=$('#thumb').val();
+          var content=editor.getContent();
+          var keywords=$('#keywords').val();
+          var desc=$('#desc').val();
+          var linkurl=$('#linkurl').val();
+          var author=$('#author').val();
+          var source=$('#source').val();
+          var addtime=$('#addtime').val();
+          var tags=$("input[name='tags']").val();
+          var comment=$('#comment').val();
+          var flag=$('#flag').val();
+          var open=$("input[name='open']:checked").val();;
+          var hits=$('#hits').val();
+          var zan=$('#zan').val();
+          var cai=$('#cai').val();
+          var orderid=$('#orderid').val();
+          var id=$('#id').val();
+          $.ajax({
+                  type: "post",
+                  url: "{:url('article/edit')}",
+                  data:{classid:classid,title:title,picurl:picurl,thumb:thumb,content:content,keywords:keywords,
+                        desc:desc,linkurl:linkurl,author:author,source:source,addtime:addtime,open:open,tags:tags,
+                        flag:flag,comment:comment,hits:hits,zan:zan,cai:cai,orderid:orderid,id:id},
+                  dataType: "json",
+                  success: function(data){
+                      if(data.status==200){
+                           layer.msg(data.info ,{icon: 1,time:1000} , function(){
+                               var index = parent.layer.getFrameIndex(window.name);
+                               parent.$('.btn-refresh').click();
+                               parent.layer.close(index);
+                           });
+                      }else{
+                          layer.msg(data.info,{icon: 5,anim: 6,time:1000} , function(){});
+                      }
+                  }
+              });
+  }
+
+</script>
+</script>
+</body>
+</html>

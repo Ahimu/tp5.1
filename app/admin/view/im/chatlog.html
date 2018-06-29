@@ -1,0 +1,41 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>聊天记录</title>
+
+<link rel="stylesheet" href="__kefu__/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="__kefu__/style/admin.css" media="all">
+<style>
+body .layim-chat-main{height: auto;}
+</style>
+</head>
+<body>
+    <script src="__kefu__/layui/jquery.min.js"></script>
+    <script src="__kefu__/layui/layui.js"></script>
+<div class="layim-chat-main">
+  <ul id="LAY_view">
+      <div id="chatlog">
+          <div style="padding: 20px; background-color: #F2F2F2;">
+            <div class="layui-row layui-col-space15">
+              <div class="layui-col-md6">
+                {volist name="list" id="vo"}
+                <div class="layui-card">
+                    <div class="layui-card-header"><img src="{$vo.fromavatar}" class="layui-nav-img">{$vo.fromname}</div>
+                    <div class="layui-card-body layui-text">
+                        {$vo.content}<br>
+                      {$vo.timeline|date="Y-m-d H:i:s",###}
+                    </div>
+                </div>
+                {/volist}
+              </div>
+            </div>
+          </div>
+      </div>
+  </ul>
+</div>
+</body>
+</html>
